@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Isara Dilnuka</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/babel-standalone@6.26.0/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .fade-in { animation: fadeIn 1s ease-in; }
+        .hover-scale:hover { transform: scale(1.05); transition: transform 0.3s ease; }
+        .glass { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); }
+        .dark-glass { background: rgba(0, 0, 0, 0.3); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); }
+        .profile-img { width: 200px; height: 200px; object-fit: cover; border-radius: 50%; border: 2px solid #FF4040; }
+        .hamburger { display: none; }
+        .social-icon { font-size: 1.5rem; color: white; transition: color 0.3s ease; }
+        .social-icon:hover { color: #FF4040; }
+        @media (max-width: 768px) {
+            .hamburger { display: block; cursor: pointer; }
+            .nav-links { display: none; }
+            .nav-links.active { display: flex; flex-direction: column; position: absolute; top: 64px; left: 0; width: 100%; background: rgba(0, 0, 0, 0.9); backdrop-filter: blur(10px); }
+            .social-icon { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body class="bg-black text-white font-sans">
+    <div id="root"></div>
+    <script type="text/babel">
+        const NavBar = () => {
+            const [isOpen, setIsOpen] = React.useState(false);
+            const navLinks = ['Home', 'About', 'Services', 'Portfolio', 'Feedback', 'Contact'];
+
+            const toggleMenu = () => {
+                setIsOpen(!isOpen);
+            };
+
+            return (
+                <nav class="fixed top-0 w-full glass shadow-lg z-50">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="flex justify-between h-16">
+                            <div class="flex items-center">
+                                <h1 class="text-2xl md:text-3xl font-bold">Isara Dilnuka</h1>
+                            </div>
+                            <div class="flex items-center md:hidden">
+                                <div class="hamburger" onClick={toggleMenu}>
+                                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class={`flex items-center space-x-4 md:space-x-6 nav-links ${isOpen ? 'active' : ''}`}>
+                                {navLinks.map(link => (
+                                    <a
+                                        key={link}
+                                        href={`#${link.toLowerCase()}`}
+                                        class="text-white hover:text-[#FF4040] px-3 py-2 rounded-md text-sm md:text-base font-medium transition-colors"
+                                        onClick={() => setIsOpen(false)}
+                                    >
+                                        {link}
+                                    </a>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            );
+        };
+
+        const Hero = () => (
+            <section id="home" class="min-h-screen flex items-center justify-center bg-gradient-to-b from-[#8B0000] to-black fade-in">
+                <div class="text-center max-w-3xl mx-auto px-4 glass p-6 md:p-8 rounded-lg">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4">Isara Dilnuka</h2>
+                    <p class="text-lg md:text-xl mb-6">Professional Graphic Designer from Horana, Sri Lanka</p>
+                    <p class="text-base md:text-lg mb-8">Specializing in YouTube thumbnails, logos, posters, banners, and more</p>
+                    <div class="space-x-4">
+                        <a href="#portfolio" class="bg-[#FF4040] text-white px-6 py-3 rounded-full hover:bg-[#D3D3D3] text-base md:text-lg transition-colors">View Portfolio</a>
+                        <a href="#contact" class="border border-[#FF4040] text-[#FF4040] px-6 py-3 rounded-full hover:bg-[#FF4040] hover:text-white text-base md:text-lg transition-colors">Contact Me</a>
+                    </div>
+                </div>
+            </section>
+        );
+
+        const About = () => (
+            <section id="about" class="py-16 md:py-20 bg-[rgba(211,211,211,0.2)] text-white fade-in">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <h2 class="text-3xl md:text-4xl font-bold text-center mb-8 md:mb-12">About Me</h2>
+                    <div class="flex flex-col md:flex-row items-center gap-6 md:gap-8 glass p-6 md:p-8 rounded-lg">
+                        <div class="md:w-1/2 text-center">
+                            <img src="data:image/jpeg;base64,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" alt="Isara Dilnuka" class="profile-img mx-auto mb-4" />
+                            <h3 class="text-xl md:text-2xl font-semibold mb-4">Creative Graphic Designer</h3>
+                            <p class="text-sm md:text-base mb-4">Hello! I'm Isara Dilnuka, a passionate graphic designer from Horana, Sri Lanka. I specialize in creating eye-catching visual content that helps brands stand out.</p>
+                            <p class="text-sm md:text-base mb-4">With years of experience, I combine modern design trends with rich Sinhala artistic influences to deliver unique and effective designs.</p>
+                        </div>
+                        <div class="md:w-1/2">
+                            <h3 class="text-xl md:text-2xl font-semibold mb-4">My Design Skills</h3>
+                            <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                {['Logo Design', 'YouTube Thumbnails', 'Poster Design', 'Banner Creation', 'Brand Identity', 'Social Media Graphics'].map(skill => (
+                                    <li key={skill} class="bg-[#FF4040] text-white px-4 py-2 rounded-md text-sm md:text-base">{skill}</li>
+                                ))}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+ <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                    <div class="flex justify-center space-x-4 md:space-x-6 mb-4">
+                        <a href="https://www.facebook.com/Dilnuka.13x" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/dilnuka.13x/" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.tiktok.com/@dilnuka.13x" target="_blank" class="social-icon"><i class="fab fa-tiktok"></i></a>
+                        <a href="https://x.com/Dilnuka_13" target="_blank" class="social-icon"><i class="fab fa-x-twitter"></i></a>
+                        <a href="https://linkedin.com/in/isara-dilnuka-2b58b82a2" target="_blank" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://api.whatsapp.com/send?phone=94716155666" target="_blank" class="social-icon"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://www.threads.com/@dilnuka.13x" target="_blank" class="social-icon"><i class="fab fa-threads"></i></a>
+                    </div>
+                    <p class="text-sm md:text-base mb-4">© 2025 Isara Dilnuka. All Rights Reserved.</p>
+                    <p class="text-sm md:text-base">Professional graphic designer specializing in YouTube thumbnails, logos, posters, and banners. Based in Horana, Sri Lanka.</p>
+                </div>
+            </section>
+        );
+
+        const Services = () => (
+            <section id="services" class="py-16 md:py-20 bg-[rgba(0,0,0,0.5)] text-white fade-in">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <h2 class="text-3xl md:text-4xl font-bold text-center mb-8 md:mb-12">My Services</h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
+                        {[
+                            { title: 'YouTube Thumbnails', desc: 'Eye-catching thumbnails to boost click-through rates.' },
+                            { title: 'Logo Design', desc: 'Unique logos that capture your brand’s essence.' },
+                            { title: 'Poster & Banner Design', desc: 'Striking visuals for events and promotions.' }
+                        ].map(service => (
+                            <div key={service.title} class="dark-glass p-4 md:p-6 rounded-lg hover-scale">
+                                <h3 class="text-lg md:text-xl font-semibold mb-2">{service.title}</h3>
+                                <p class="text-sm md:text-base">{service.desc}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+        );
+
+        const Portfolio = () => (
+            <section id="portfolio" class="py-16 md:py-20 bg-[rgba(211,211,211,0.2)] text-white fade-in">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <h2 class="text-3xl md:text-4xl font-bold text-center mb-8 md:mb-12">Portfolio</h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                        {[
+                            { title: 'Tech Review Thumbnail', desc: 'Eye-catching YouTube thumbnail for tech channel' },
+                            { title: 'Gaming Thumbnail', desc: 'Dynamic thumbnail for gaming content' },
+                            { title: 'Restaurant Logo', desc: 'Modern logo for a local restaurant' },
+                            { title: 'Cultural Event Poster', desc: 'Vibrant poster for a cultural festival' },
+                            { title: 'Web Banner', desc: 'Professional banner for e-commerce' },
+                            { title: 'Music Concert Poster', desc: 'Dynamic poster for a music concert' }
+                        ].map(item => (
+                            <div key={item.title} class="glass p-4 rounded-lg shadow-lg hover-scale">
+                                <div class="h-40 md:h-48 bg-[#8B0000] rounded-md mb-4"></div>
+                                <h3 class="text-base md:text-lg font-semibold">{item.title}</h3>
+                                <p class="text-sm">{item.desc}</p>
+                                <a href="#" class="text-[#FF4040] hover:underline text-sm md:text-base">View Larger</a>
+                            </div>
+                        ))}
+                    </div>
+                    <div class="text-center mt-6 md:mt-8">
+                        <a href="#portfolio" class="bg-[#FF4040] text-white px-6 py-3 rounded-full hover:bg-[#D3D3D3] hover:text-black text-base md:text-lg transition-colors">View All Works</a>
+                    </div>
+                </div>
+            </section>
+        );
+
+        const Feedback = () => {
+            const [feedbacks, setFeedbacks] = React.useState([]);
+
+            const handleSubmit = (e) => {
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                const newFeedback = {
+                    name: formData.get('from_name'),
+                    email: formData.get('from_email'),
+                    rating: parseInt(formData.get('rating')),
+                    text: formData.get('message')
+                };
+                setFeedbacks([...feedbacks, newFeedback]);
+                e.target.reset();
+                alert('Feedback submitted successfully!');
+            };
+
+            return (
+                <section id="feedback" class="py-16 md:py-20 bg-[rgba(0,0,0,0.5)] text-white fade-in">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <h2 class="text-3xl md:text-4xl font-bold text-center mb-8 md:mb-12">Client Feedback</h2>
+                        <div class="flex flex-col md:flex-row gap-6 md:gap-8">
+                            <div class="md:w-1/2 dark-glass p-4 md:p-6 rounded-lg">
+                                <h3 class="text-xl md:text-2xl font-semibold mb-4">Share Your Experience</h3>
+                                <form id="feedback-form" class="space-y-4" onSubmit={handleSubmit}>
+                                    <input type="text" name="from_name" placeholder="Your Name" class="w-full p-2 rounded-md bg-[rgba(211,211,211,0.5)] text-white text-sm md:text-base" required />
+                                    <input type="email" name="from_email" placeholder="Your Email" class="w-full p-2 rounded-md bg-[rgba(211,211,211,0.5)] text-white text-sm md:text-base" required />
+                                    <select name="rating" class="w-full p-2 rounded-md bg-[rgba(211,211,211,0.5)] text-white text-sm md:text-base" required>
+                                        {[1, 2, 3, 4, 5].map(n => <option key={n} value={n}>{n} Star{n > 1 ? 's' : ''}</option>)}
+                                    </select>
+                                    <textarea name="message" placeholder="Your Feedback" class="w-full p-2 rounded-md bg-[rgba(255,255,255,0.2)] text-white h-24 md:h-32 text-sm md:text-base" required></textarea>
+                                    <button type="submit" class="bg-[#FF4040] text-white px-6 py-3 rounded-full hover:bg-[#D3D3D3] hover:text-black text-base md:text-lg transition-colors">Submit Feedback</button>
+                                </form>
+                            </div>
+                            <div class="md:w-1/2 space-y-4 md:space-y-6">
+                                {feedbacks.length === 0 ? (
+                                    <p class="text-center text-gray-400 text-sm md:text-base">No feedback available yet. Be the first to share your experience!</p>
+                                ) : (
+                                    feedbacks.map((feedback, index) => (
+                                        <div key={index} class="dark-glass p-4 rounded-lg">
+                                            <h4 class="font-semibold text-sm md:text-base">{feedback.name}</h4>
+                                            <div class="flex">{Array(feedback.rating).fill().map((_, i) => <span key={i}>⭐</span>)}</div>
+                                            <p class="text-sm md:text-base">{feedback.text}</p>
+                                        </div>
+                                    ))
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        const Contact = () => (
+            <section id="contact" class="py-16 md:py-20 bg-[rgba(211,211,211,0.2)] text-white fade-in">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <h2 class="text-3xl md:text-4xl font-bold text-center mb-8 md:mb-12">Get In Touch</h2>
+                    <div class="flex flex-col md:flex-row gap-6 md:gap-8">
+                        <div class="md:w-1/2 dark-glass p-4 md:p-6 rounded-lg">
+                            <h3 class="text-xl md:text-2xl font-semibold mb-4">Contact Information</h3>
+                            <p class="text-sm md:text-base mb-2"><strong>Location:</strong> Dikhengama, Munagama, Horana, 12400, Sri Lanka</p>
+                            <p class="text-sm md:text-base mb-2"><strong>Phone:</strong> 0716155666</p>
+                            <p class="text-sm md:text-base mb-2"><strong>Email:</strong> isaradilnuka@gmail.com</p>
+                            <p class="text-sm md:text-base"><strong>Working Hours:</strong><br />Mon-Fri: 9:00 AM - 6:00 PM<br />Sat: 10:00 AM - 4:00 PM</p>
+                        </div>
+                        <div class="md:w-1/2">
+                            <h3 class="text-xl md:text-2xl font-semibold mb-4">Send Me a Message</h3>
+                            <form id="contact-form" class="space-y-4 glass p-4 md:p-6 rounded-lg" onSubmit={e => {
+                                e.preventDefault();
+                                emailjs.sendForm('service_dmfo24a', 'template_btqkn97', e.target, 'yEU4ZKDB4pOIFa-rZ')
+                                    .then(() => alert('Message sent successfully!'))
+                                    .catch(() => alert('Failed to send message. Please try again.'));
+                            }}>
+                                <input type="text" name="from_name" placeholder="Your Name" class="w-full p-2 rounded-md bg-[rgba(255,255,255,0.2)] text-white text-sm md:text-base" required />
+                                <input type="email" name="from_email" placeholder="Your Email" class="w-full p-2 rounded-md bg-[rgba(255,255,255,0.2)] text-white text-sm md:text-base" required />
+                                <input type="text" name="subject" placeholder="Subject" class="w-full p-2 rounded-md bg-[rgba(255,255,255,0.2)] text-white text-sm md:text-base" required />
+                                <textarea name="message" placeholder="Your Message" class="w-full p-2 rounded-md bg-[rgba(255,255,255,0.2)] text-white h-24 md:h-32 text-sm md:text-base" required></textarea>
+                                <button type="submit" class="bg-[#FF4040] text-white px-6 py-3 rounded-full hover:bg-[#8B0000] text-base md:text-lg transition-colors">Send Message</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        );
+
+        const Footer = () => (
+            <footer class="bg-[rgba(139,0,0,0.8)] py-6 md:py-8 text-white">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                    <div class="flex justify-center space-x-4 md:space-x-6 mb-4">
+                        <a href="https://www.facebook.com/Dilnuka.13x" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/dilnuka.13x/" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.tiktok.com/@dilnuka.13x" target="_blank" class="social-icon"><i class="fab fa-tiktok"></i></a>
+                        <a href="https://x.com/Dilnuka_13" target="_blank" class="social-icon"><i class="fab fa-x-twitter"></i></a>
+                        <a href="https://linkedin.com/in/isara-dilnuka-2b58b82a2" target="_blank" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://api.whatsapp.com/send?phone=94716155666" target="_blank" class="social-icon"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://www.threads.com/@dilnuka.13x" target="_blank" class="social-icon"><i class="fab fa-threads"></i></a>
+                    </div>
+                    <p class="text-sm md:text-base mb-4">© 2025 Isara Dilnuka. All Rights Reserved.</p>
+                    <p class="text-sm md:text-base">Professional graphic designer specializing in YouTube thumbnails, logos, posters, and banners. Based in Horana, Sri Lanka.</p>
+                </div>
+            </footer>
+        );
+
+        const App = () => {
+            React.useEffect(() => {
+                emailjs.init('yEU4ZKDB4pOIFa-rZ');
+            }, []);
+            return (
+                <div>
+                    <NavBar />
+                    <Hero />
+                    <About />
+                    <Services />
+                    <Portfolio />
+                    <Feedback />
+                    <Contact />
+                    <Footer />
+                </div>
+            );
+        };
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>
