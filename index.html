@@ -1,9 +1,48 @@
-<!DOCTYPE html>
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Isara Dilnuka</title>
+    <title>Isara Dilnuka - Graphic Designer</title>
     <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.production.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/babel-standalone@6.26.0/babel.min.js"></script>
@@ -14,9 +53,16 @@
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         .fade-in { animation: fadeIn 1s ease-in; }
         .hover-scale:hover { transform: scale(1.05); transition: transform 0.3s ease; }
-        .glass { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); }
+        .glass { background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.3); }
         .dark-glass { background: rgba(0, 0, 0, 0.3); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); }
         .profile-img { width: 200px; height: 200px; object-fit: cover; border-radius: 50%; border: 2px solid #FF4040; }
+        .hero-bg {
+            background-image: url('https://static.vecteezy.com/system/resources/previews/030/678/980/large_2x/red-background-high-quality-free-photo.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+        }
         .hamburger { display: none; }
         .social-icon { font-size: 1.5rem; color: white; transition: color 0.3s ease; }
         .social-icon:hover { color: #FF4040; }
@@ -25,6 +71,7 @@
             .nav-links { display: none; }
             .nav-links.active { display: flex; flex-direction: column; position: absolute; top: 64px; left: 0; width: 100%; background: rgba(0, 0, 0, 0.9); backdrop-filter: blur(10px); }
             .social-icon { font-size: 1.2rem; }
+            .profile-img { width: 150px; height: 150px; }
         }
     </style>
 </head>
@@ -72,7 +119,7 @@
         };
 
         const Hero = () => (
-            <section id="home" class="min-h-screen flex items-center justify-center bg-gradient-to-b from-[#8B0000] to-black fade-in">
+            <section id="home" class="hero-bg flex items-center justify-center fade-in">
                 <div class="text-center max-w-3xl mx-auto px-4 glass p-6 md:p-8 rounded-lg">
                     <h2 class="text-4xl md:text-5xl font-bold mb-4">Isara Dilnuka</h2>
                     <p class="text-lg md:text-xl mb-6">Professional Graphic Designer from Horana, Sri Lanka</p>
@@ -91,7 +138,7 @@
                     <h2 class="text-3xl md:text-4xl font-bold text-center mb-8 md:mb-12">About Me</h2>
                     <div class="flex flex-col md:flex-row items-center gap-6 md:gap-8 glass p-6 md:p-8 rounded-lg">
                         <div class="md:w-1/2 text-center">
-                            <img src="data:image/jpeg;base64,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" alt="Isara Dilnuka" class="profile-img mx-auto mb-4" />
+                            <img src="images/myphoto.PNG" alt="Isara Dilnuka" class="profile-img mx-auto mb-4" />
                             <h3 class="text-xl md:text-2xl font-semibold mb-4">Creative Graphic Designer</h3>
                             <p class="text-sm md:text-base mb-4">Hello! I'm Isara Dilnuka, a passionate graphic designer from Horana, Sri Lanka. I specialize in creating eye-catching visual content that helps brands stand out.</p>
                             <p class="text-sm md:text-base mb-4">With years of experience, I combine modern design trends with rich Sinhala artistic influences to deliver unique and effective designs.</p>
@@ -105,19 +152,6 @@
                             </ul>
                         </div>
                     </div>
-                </div>
- <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <div class="flex justify-center space-x-4 md:space-x-6 mb-4">
-                        <a href="https://www.facebook.com/Dilnuka.13x" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
-                        <a href="https://www.instagram.com/dilnuka.13x/" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
-                        <a href="https://www.tiktok.com/@dilnuka.13x" target="_blank" class="social-icon"><i class="fab fa-tiktok"></i></a>
-                        <a href="https://x.com/Dilnuka_13" target="_blank" class="social-icon"><i class="fab fa-x-twitter"></i></a>
-                        <a href="https://linkedin.com/in/isara-dilnuka-2b58b82a2" target="_blank" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="https://api.whatsapp.com/send?phone=94716155666" target="_blank" class="social-icon"><i class="fab fa-whatsapp"></i></a>
-                        <a href="https://www.threads.com/@dilnuka.13x" target="_blank" class="social-icon"><i class="fab fa-threads"></i></a>
-                    </div>
-                    <p class="text-sm md:text-base mb-4">© 2025 Isara Dilnuka. All Rights Reserved.</p>
-                    <p class="text-sm md:text-base">Professional graphic designer specializing in YouTube thumbnails, logos, posters, and banners. Based in Horana, Sri Lanka.</p>
                 </div>
             </section>
         );
