@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message Sent | Isara Dilnuka</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="titlebar.png">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <a href="index.html" class="logo">Isara Dilnuka</a>
+            <div class="header-actions">
+                <a href="index.html" class="contact-icon"><span>🏠</span><span>Home</span></a>
+                <a href="services.html" class="contact-icon"><span>🧰</span><span>Services</span></a>
+            </div>
+        </div>
+    </header>
+
+    <main style="margin-top: 90px;">
+        <div class="container">
+            <div class="card animate-on-scroll" style="max-width: 800px; margin: 0 auto;">
+                <h1 style="margin-bottom: .5rem;">Thank you! Your message has been sent.</h1>
+                <p style="color: var(--text-light); margin-bottom: 1rem;">A copy of your details is shown below for your records.</p>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="card" style="margin:0;">
+                        <h3 style="margin-bottom: .5rem;">Your Details</h3>
+                        <p><strong>Name:</strong> <span id="m_name">—</span></p>
+                        <p><strong>Email:</strong> <span id="m_email">—</span></p>
+                        <p><strong>Subject:</strong> <span id="m_subject">—</span></p>
+                    </div>
+                    <div class="card" style="margin:0;">
+                        <h3 style="margin-bottom: .5rem;">Message</h3>
+                        <p id="m_message" style="white-space: pre-wrap; color: var(--text-light);"></p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 1rem; display:flex; gap:.5rem; flex-wrap: wrap;">
+                    <a href="contact.html" class="btn btn-secondary">Send Another Message</a>
+                    <a href="index.html" class="btn btn-primary">Back to Home</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-bottom" style="text-align:center;">
+                <p>&copy; 2025 Isara Dilnuka. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                document.getElementById('m_name').textContent = sessionStorage.getItem('msg_name') || '—';
+                document.getElementById('m_email').textContent = sessionStorage.getItem('msg_email') || '—';
+                document.getElementById('m_subject').textContent = sessionStorage.getItem('msg_subject') || '—';
+                document.getElementById('m_message').textContent = sessionStorage.getItem('msg_message') || '';
+            } catch(e) {}
+        });
+    </script>
+</body>
+</html>
+
+
