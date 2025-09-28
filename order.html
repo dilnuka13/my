@@ -31,7 +31,7 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script type="text/javascript">
         (function() {
-            // EmailJS initialization - ඔබගේ Public Key එක මෙහි ඇතුලත් කරන්න
+            // EmailJS initialization
             emailjs.init("yEU4ZKDB4pOIFa-rZ");
         })();
     </script>
@@ -416,10 +416,26 @@
                         submission_date: new Date().toLocaleString()
                     };
                     
-                    // Send email using EmailJS
-                    emailjs.send('service_dmfo24a', 'template_n2xmlym', formData)
-                        .then(function(response) {
-                            console.log('SUCCESS!', response.status, response.text);
+                    // Send email to admin (you)
+                    const adminPromise = emailjs.send('service_dmfo24a', 'template_n2xmlym', formData);
+                    
+                    // Send auto-reply to client
+                    const clientPromise = emailjs.send('service_dmfo24a', 'template_jrwlwl7', {
+                        order_reference: orderRef,
+                        service: formData.service,
+                        name: formData.name,
+                        email: formData.email,
+                        phone: formData.phone,
+                        company: formData.company,
+                        budget: formData.budget,
+                        timeline: formData.timeline,
+                        submission_date: formData.submission_date
+                    });
+                    
+                    // Wait for both emails to be sent
+                    Promise.all([adminPromise, clientPromise])
+                        .then(function(responses) {
+                            console.log('SUCCESS! Both emails sent', responses);
                             
                             // Store order data in sessionStorage
                             try {
@@ -452,7 +468,6 @@
                 });
             }
         });
-        
         
         function showOrderError() {
             const errorDiv = document.createElement('div');
