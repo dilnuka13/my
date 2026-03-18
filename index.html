@@ -5,19 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Isara Dilnuka | Full Stack Developer</title>
     
-    <!-- Meta Tags -->
-    <meta name="description" content="Professional portfolio of Isara Dilnuka - Full Stack Developer & Graphics Designer.">
+    <!-- Meta Tags for Production -->
+    <meta name="description" content="Professional portfolio of Isara Dilnuka - Full Stack Developer, Programmer, and Graphics Designer from Sri Lanka.">
+    <meta name="keywords" content="Isara Dilnuka, Full Stack Developer, Python, PHP, Horana, Web Developer, Portfolio">
+    <meta name="author" content="Isara Dilnuka">
+    <meta name="theme-color" content="#000000">
     
     <!-- External Assets -->
     <link rel="icon" type="image/png" href="titlebar.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 
     <style>
         /* --- iOS 26 LIQUID GLASS VARIABLES (DARK MODE ONLY) --- */
         :root {
             /* Apple Inspired Core Colors */
-            --primary-color: #34C759; /* iOS System Green */
+            --primary-color: #34C759; 
             --primary-hover: #30D158; 
             --primary-glow: rgba(52, 199, 89, 0.4);
             --accent-blue: #0A84FF;
@@ -63,10 +66,7 @@
         
         body:not(.loaded) { overflow: hidden; }
 
-        h1, h2, h3, h4, h5, h6 {
-            font-weight: 700; letter-spacing: -0.03em;
-        }
-
+        h1, h2, h3, h4, h5, h6 { font-weight: 700; letter-spacing: -0.03em; }
         a { text-decoration: none; color: inherit; transition: all 0.3s ease; outline: none; -webkit-tap-highlight-color: transparent;}
         img { max-width: 100%; display: block; }
         input, textarea, button { font-family: inherit; }
@@ -90,6 +90,7 @@
             position: absolute; border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; 
             filter: blur(90px); animation: fluidMotion 20s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
             opacity: 0.8;
+            will-change: transform, border-radius;
         }
         .blob-1 { top: -10%; left: -10%; width: 55vw; height: 55vw; background: var(--blob-1); }
         .blob-2 { bottom: -20%; right: -10%; width: 65vw; height: 65vw; background: var(--blob-2); animation-direction: alternate-reverse; animation-delay: -5s; }
@@ -151,11 +152,11 @@
         .btn:active { transform: scale(0.95); }
         
         .btn-primary { 
-            background: rgba(52, 199, 89, 0.25); /* Tinted Liquid Green */
+            background: rgba(52, 199, 89, 0.25); 
             backdrop-filter: blur(30px) saturate(200%);
             -webkit-backdrop-filter: blur(30px) saturate(200%);
             border: 1px solid rgba(52, 199, 89, 0.4);
-            border-top: 1px solid rgba(150, 255, 170, 0.7); /* Top Ray highlight */
+            border-top: 1px solid rgba(150, 255, 170, 0.7); 
             box-shadow: 0 8px 24px -8px rgba(52, 199, 89, 0.5), inset 0 1px 4px rgba(255,255,255,0.4);
             color: #FFFFFF;
         }
@@ -191,18 +192,11 @@
         /* Flex layout for proper alignment on PC */
         .nav-logo-wrapper { flex: 1; display: flex; justify-content: flex-start; }
         .nav-main { flex: 2; display: flex; justify-content: center; }
-        .nav-placeholder { flex: 1; display: flex; justify-content: flex-end; } /* To balance flexbox */
+        .nav-placeholder { flex: 1; display: flex; justify-content: flex-end; } 
 
         /* Logo Styles */
         .nav-logo { display: flex; align-items: center; padding: 0.5rem; }
-        .logo-text {
-            color: var(--primary-color); font-weight: 800; font-size: 1.5rem; letter-spacing: -1px;
-            position: relative; display: inline-block;
-        }
-        .logo-text::after {
-            content: ''; position: absolute; bottom: -4px; left: 0; width: 100%; height: 3px;
-            background-color: var(--primary-color); border-radius: 2px;
-        }
+        .logo-img { height: 32px; width: auto; object-fit: contain; }
         .mobile-top-logo { display: none; }
         
         /* Menu Links */
@@ -214,19 +208,19 @@
         /* --- LIQUID DROP GLIDING INDICATOR --- */
         .liquid-indicator {
             position: absolute; top: 0; left: 0; border-radius: 999px;
-            /* Liquid drop catching light from above */
             background: radial-gradient(120% 120% at 50% 0%, var(--indicator-glow) 0%, transparent 80%), var(--indicator-bg);
             border: 1px solid var(--indicator-border); 
             border-top-color: var(--glass-highlight);
             box-shadow: 
-                inset 0 2px 4px rgba(255,255,255,0.25), /* Inner light reflection */
-                inset 0 -2px 6px rgba(0,0,0,0.3), /* Bottom depth */
-                0 6px 16px rgba(0,0,0,0.2); /* Soft drop shadow */
+                inset 0 2px 4px rgba(255,255,255,0.25),
+                inset 0 -2px 6px rgba(0,0,0,0.3), 
+                0 6px 16px rgba(0,0,0,0.2); 
             transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), 
                         width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
                         height 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
                         opacity 0.3s ease;
             z-index: 1; pointer-events: none; opacity: 0;
+            will-change: transform, width, height;
         }
 
         .nav-link {
@@ -235,10 +229,9 @@
             position: relative; z-index: 2; display: flex; align-items: center; justify-content: center;
         }
         .nav-link:hover, .nav-link.active { color: var(--text-main); }
-        .nav-icon { display: none; } /* Hide icons on desktop */
+        .nav-icon { display: none; } 
         .nav-text { display: inline-block; }
 
-        /* Dots between menus */
         .nav-dot {
             color: var(--text-muted); font-size: 0.5rem; opacity: 0.4;
             pointer-events: none; user-select: none; margin: 0 0.2rem;
@@ -327,23 +320,27 @@
         /* --- IOS 26 ACTION SHEET MODAL --- */
         .modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
-            z-index: 2000; display: flex; align-items: flex-end; justify-content: center; 
+            background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            z-index: 2000; display: flex; align-items: center; justify-content: center; /* Centered for PC */
             opacity: 0; pointer-events: none; transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .modal.active { opacity: 1; pointer-events: auto; }
         
         .modal-content {
-            width: 100%; max-width: 800px; height: 90vh; border-radius: 32px 32px 0 0; 
-            transform: translateY(100%); transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            width: 100%; max-width: 800px; height: 85vh; border-radius: 32px; 
+            transform: scale(0.9) translateY(20px); transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
             display: flex; flex-direction: column; overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
-        .modal.active .modal-content { transform: translateY(0); }
+        .modal.active .modal-content { transform: scale(1) translateY(0); }
         
-        .modal-drag-handle { width: 40px; height: 5px; background: var(--text-muted); opacity: 0.5; border-radius: 10px; margin: 12px auto; }
-        .modal-header { padding: 0 1.5rem 1rem; display: flex; justify-content: space-between; align-items: center; }
+        .modal-drag-handle { display: none; } /* Hide on PC */
+        .modal-header { padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--glass-border); }
         .close-modal { background: rgba(150, 150, 150, 0.2); border: none; color: var(--text-main); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.3s;}
         .close-modal:hover { background: rgba(255, 59, 48, 0.8); color: white; }
+
+        .modal-body { flex: 1; width: 100%; background: #ffffff; overflow-y: auto; -webkit-overflow-scrolling: touch;}
+        .modal-body iframe { width: 100%; height: 100%; border: none; display: block; }
 
         /* Notification Modal */
         #notificationModal { align-items: center; }
@@ -389,6 +386,16 @@
             
             .section-padding { padding-top: 120px; padding-bottom: 120px; /* Space for bottom nav */ }
             .stat-group { flex-direction: column; gap: 1.5rem; }
+
+            /* Action Sheet Modal for Mobile */
+            .modal { align-items: flex-end; }
+            .modal-content { 
+                height: 90vh; border-radius: 32px 32px 0 0; 
+                transform: translateY(100%); margin: 0; max-width: 100%;
+            }
+            .modal.active .modal-content { transform: translateY(0); }
+            .modal-drag-handle { display: block; width: 40px; height: 5px; background: var(--text-muted); opacity: 0.5; border-radius: 10px; margin: 12px auto; }
+            .modal-header { padding: 0 1.5rem 1rem; border: none;}
         }
         @media (min-width: 769px) {
             .grid-2 { grid-template-columns: 1fr 1fr; align-items: center; }
@@ -416,17 +423,17 @@
 
     <!-- MOBILE ONLY TOP LOGO -->
     <a href="#home" class="mobile-top-logo nav-logo">
-        <span class="logo-text">ID</span>
+        <img src="titlebar.png" alt="ID" style="height: 28px; object-fit: contain;" onerror="this.style.display='none';">
     </a>
 
     <!-- DYNAMIC PILL HEADER / MOBILE BOTTOM BAR -->
     <header class="header liquid-glass">
         <div class="nav-container">
             
-            <!-- Desktop Left: Logo -->
+            <!-- Desktop Left: Logo Image -->
             <div class="nav-logo-wrapper">
                 <a href="#home" class="nav-logo">
-                    <span class="logo-text">ID</span>
+                    <img src="titlebar.png" alt="Isara Dilnuka" class="logo-img" onerror="this.src='https://placehold.co/80x30/1C1C1E/FFFFFF?text=ID'">
                 </a>
             </div>
 
@@ -448,7 +455,7 @@
                 </ul>
             </nav>
             
-            <!-- Desktop Right Placeholder (Balances Logo) -->
+            <!-- Desktop Right Placeholder (Balances Logo width) -->
             <div class="nav-placeholder"></div>
         </div>
     </header>
@@ -485,10 +492,10 @@
                             <div class="stat-item"><h3>50+</h3><p>Projects Done</p></div>
                         </div>
                     </div>
-                    <!-- Hero image hides on Mobile entirely -->
+                    <!-- Hero image hides on Mobile entirely via CSS -->
                     <div class="hero-image">
                         <div class="image-wrapper liquid-glass">
-                            <img src="isara-profile.jpg" alt="Isara Dilnuka" onerror="this.src='https://placehold.co/400x500/1C1C1E/FFFFFF?text=Photo'">
+                            <img src="isara-profile.jpg" alt="Isara Dilnuka" loading="lazy" onerror="this.src='https://placehold.co/400x500/1C1C1E/FFFFFF?text=Photo'">
                         </div>
                     </div>
                 </div>
@@ -505,7 +512,7 @@
                 <div class="grid grid-2">
                     <div>
                         <div class="liquid-glass" style="border-radius: 32px; overflow: hidden; height: 100%;">
-                            <img src="isara-profile.jpg" alt="About Isara" onerror="this.src='https://placehold.co/600x500/1C1C1E/FFFFFF?text=About+Me'" style="width: 100%; height: 100%; object-fit: cover;">
+                            <img src="isara-profile.jpg" alt="About Isara" loading="lazy" onerror="this.src='https://placehold.co/600x500/1C1C1E/FFFFFF?text=About+Me'" style="width: 100%; height: 100%; object-fit: cover;">
                         </div>
                     </div>
                     <div>
@@ -736,7 +743,7 @@
                     preloader.style.display = 'none';
                     document.body.classList.add('loaded');
                     handleRouting();
-                    setTimeout(updateIndicators, 100); // Give layout time to settle
+                    setTimeout(updateIndicators, 100); 
                 }, 800);
             }, 2800); 
         });
@@ -808,7 +815,7 @@
                 document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 
-                updateIndicators(); // Slide the liquid drop indicator!
+                updateIndicators(); 
 
                 const filter = btn.getAttribute('data-filter');
                 document.querySelectorAll('.portfolio-item').forEach(item => {
