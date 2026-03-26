@@ -83,6 +83,12 @@
         }
 
         /* --- FLUID BACKGROUND --- */
+        .bg-custom-image {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2;
+            background: url('https://dilnuka13.github.io/my/background.avif') no-repeat center center;
+            background-size: cover; opacity: 0.6; pointer-events: none;
+        }
+
         .bg-blobs {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; overflow: hidden; pointer-events: none;
         }
@@ -106,7 +112,7 @@
         #preloader {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999;
             display: flex; justify-content: center; align-items: center; flex-direction: column;
-            background: var(--bg-body); transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.8s;
+            background: var(--bg-body); transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.5s;
         }
         #preloader.hide { opacity: 0; visibility: hidden; transform: scale(1.05); }
         
@@ -115,13 +121,13 @@
         .loader-logo { 
             width: 80px; height: 80px; object-fit: contain; margin-bottom: 2rem;
             opacity: 0; transform: scale(0.8) translateY(20px);
-            animation: appleFadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: appleFadeIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
         
         .welcome-text {
             font-size: 1.2rem; color: var(--text-muted); font-weight: 500; margin-bottom: 0.5rem;
             opacity: 0; transform: translateY(15px);
-            animation: appleFadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+            animation: appleFadeIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
         }
         
         .brand-text {
@@ -129,7 +135,7 @@
             background: linear-gradient(135deg, var(--text-main), var(--text-muted));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             opacity: 0; transform: translateY(15px); filter: blur(10px);
-            animation: appleTextReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+            animation: appleTextReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
         }
 
         @keyframes appleFadeIn { to { opacity: 1; transform: scale(1) translateY(0); } }
@@ -347,6 +353,52 @@
         #notificationModal .modal-content { height: auto; width: 90%; max-width: 380px; padding: 2.5rem; text-align: center; border-radius: 32px; transform: scale(0.9) translateY(20px); }
         #notificationModal.active .modal-content { transform: scale(1) translateY(0); }
 
+        /* --- FOOTER STYLES --- */
+        .site-footer {
+            margin-top: 4rem;
+            border-radius: 40px 40px 0 0;
+            border-bottom: none; border-left: none; border-right: none;
+            padding: 4rem 0 2rem;
+            position: relative;
+            z-index: 10;
+            background: rgba(20, 20, 22, 0.7);
+        }
+        .footer-grid-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1.5fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        .footer-brand img { width: 45px; margin-bottom: 1.2rem; }
+        .footer-brand h3 { font-size: 1.6rem; margin-bottom: 0.5rem; color: var(--text-main); }
+        .footer-brand p { color: var(--text-muted); font-size: 0.95rem; max-width: 320px; line-height: 1.6; }
+        .footer-heading { font-size: 1.2rem; margin-bottom: 1.5rem; color: var(--text-main); }
+        .footer-links-list { list-style: none; padding: 0; margin: 0; }
+        .footer-links-list li { margin-bottom: 0.8rem; }
+        .footer-links-list a { color: var(--text-muted); font-size: 0.95rem; transition: all 0.3s; display: inline-block;}
+        .footer-links-list a:hover { color: var(--primary-color); transform: translateX(5px); }
+        .footer-contact-info p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1rem; display: flex; align-items: flex-start; gap: 1rem; }
+        .footer-contact-info i { color: var(--primary-color); font-size: 1.1rem; margin-top: 4px; width: 20px; text-align: center;}
+        .footer-socials { display: grid; grid-template-columns: repeat(5, max-content); gap: 1rem; margin-top: 1.5rem; }
+        .social-icon { width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); color: var(--text-main); font-size: 1.2rem; transition: all 0.3s; border: 1px solid var(--glass-border); }
+        .social-icon:hover { background: var(--primary-color); color: white; transform: translateY(-5px); box-shadow: 0 10px 20px -5px rgba(52, 199, 89, 0.4); }
+        .footer-bottom-bar { text-align: center; padding-top: 2rem; border-top: 1px solid var(--glass-border); color: var(--text-muted); font-size: 0.9rem; }
+
+        /* --- BACK TO TOP BUTTON --- */
+        .back-to-top {
+            position: fixed; bottom: 2rem; right: 2rem; width: 50px; height: 50px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; color: var(--text-main); border: none; cursor: pointer;
+            z-index: 1000; opacity: 0; visibility: hidden; transform: translateY(20px);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            background: rgba(52, 199, 89, 0.2); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(52, 199, 89, 0.4); box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        }
+        .back-to-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
+        .back-to-top:hover { background: var(--primary-color); transform: translateY(-5px); box-shadow: 0 12px 28px rgba(52, 199, 89, 0.5); }
+        
+        @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
+
         /* --- RESPONSIVE MEDIA QUERIES (MOBILE UI) --- */
         @media (max-width: 768px) {
             /* Mobile Top Standalone Logo */
@@ -396,6 +448,16 @@
             .modal.active .modal-content { transform: translateY(0); }
             .modal-drag-handle { display: block; width: 40px; height: 5px; background: var(--text-muted); opacity: 0.5; border-radius: 10px; margin: 12px auto; }
             .modal-header { padding: 0 1.5rem 1rem; border: none;}
+
+            /* Footer Adjustments for Mobile */
+            .footer-grid-layout { grid-template-columns: 1fr; gap: 2.5rem; text-align: center; }
+            .footer-brand p { margin: 0 auto; }
+            .footer-contact-info p { justify-content: center; text-align: left; width: fit-content; margin-inline: auto;}
+            .footer-socials { justify-content: center; }
+            .site-footer { padding-bottom: 120px; border-radius: 32px 32px 0 0; }
+            
+            /* Back to Top Mobile Adjust */
+            .back-to-top { bottom: 110px; right: 1.5rem; width: 45px; height: 45px; }
         }
         @media (min-width: 769px) {
             .grid-2 { grid-template-columns: 1fr 1fr; align-items: center; }
@@ -404,6 +466,9 @@
     </style>
 </head>
 <body data-theme="dark">
+
+    <!-- BACKGROUND IMAGE -->
+    <div class="bg-custom-image"></div>
 
     <!-- FLUID BACKGROUND BLOBS -->
     <div class="bg-blobs">
@@ -451,6 +516,8 @@
                     <li class="nav-dot"><i class="fas fa-circle"></i></li>
                     <li><a href="#portfolio" class="nav-link"><i class="fas fa-layer-group nav-icon"></i><span class="nav-text">Portfolio</span></a></li>
                     <li class="nav-dot"><i class="fas fa-circle"></i></li>
+                    <li><a href="#apps" class="nav-link"><i class="fas fa-mobile-alt nav-icon"></i><span class="nav-text">Apps</span></a></li>
+                    <li class="nav-dot"><i class="fas fa-circle"></i></li>
                     <li><a href="#contact" class="nav-link"><i class="fas fa-envelope nav-icon"></i><span class="nav-text">Contact</span></a></li>
                 </ul>
             </nav>
@@ -488,7 +555,7 @@
                             </a>
                         </div>
                         <div class="stat-group">
-                            <div class="stat-item"><h3>5+</h3><p>Years Experience</p></div>
+                            <div class="stat-item"><h3 id="expCount">8+</h3><p>Years Experience</p></div>
                             <div class="stat-item"><h3>50+</h3><p>Projects Done</p></div>
                         </div>
                     </div>
@@ -628,6 +695,45 @@
             </div>
         </section>
 
+        <!-- APPS SECTION -->
+        <section id="apps" class="page-section section-padding">
+            <div class="container">
+                <div class="text-center" style="margin-bottom: 3rem;">
+                    <h2>My Applications</h2>
+                    <p style="color: var(--text-muted);">Download my custom-built software for PC and Mobile.</p>
+                </div>
+                <div class="grid grid-2" style="margin-bottom: 5rem;">
+                    <!-- DE NOVA Reader -->
+                    <div class="card liquid-glass" style="text-align: center;">
+                        <div class="sf-icon-wrapper" style="margin: 0 auto 1.5rem; background: transparent; padding: 0;">
+                            <img src="https://dilnuka13.github.io/AL/favicon.ico" alt="DE NOVA Reader Logo" style="width: 100%; height: 100%; object-fit: contain; border-radius: 16px;">
+                        </div>
+                        <h4 style="margin-bottom: 0.5rem;">DE NOVA Reader</h4>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem;">A clean and efficient PDF Reader Application.</p>
+                        <div style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;">
+                            <a href="https://drive.google.com/file/d/1EH1mZU_VIrwzLQq-ij5s_U7mL9a88k7u/view?usp=sharing" target="_blank" class="btn btn-primary" style="padding: 0.6rem 1rem; font-size: 0.85rem;"><i class="fab fa-windows"></i> PC</a>
+                            <button class="btn btn-secondary" style="padding: 0.6rem 1rem; font-size: 0.85rem; opacity: 0.5; pointer-events: none;" title="Coming Soon"><i class="fab fa-android"></i> Android</button>
+                            <button class="btn btn-secondary" style="padding: 0.6rem 1rem; font-size: 0.85rem; opacity: 0.5; pointer-events: none;" title="Coming Soon"><i class="fab fa-apple"></i> iOS</button>
+                        </div>
+                    </div>
+                    
+                    <!-- DE Education -->
+                    <div class="card liquid-glass" style="text-align: center;">
+                        <div class="sf-icon-wrapper" style="margin: 0 auto 1.5rem; background: transparent; padding: 0;">
+                            <img src="https://dilnuka13.github.io/AL/favicon.ico" alt="DE Education Logo" style="width: 100%; height: 100%; object-fit: contain; border-radius: 16px;">
+                        </div>
+                        <h4 style="margin-bottom: 0.5rem;">DE Education</h4>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.4;">A/L Past Papers, Marking Schemes, AI Education Agents, Results Gateway, Calendar & Notices.</p>
+                        <div style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;">
+                            <a href="https://drive.google.com/file/d/1yFpYLmIoHH2Cp8ZkxK7Y8cO5rYmD-rYq/view?usp=sharing" target="_blank" class="btn btn-primary" style="padding: 0.6rem 1rem; font-size: 0.85rem;"><i class="fab fa-windows"></i> PC</a>
+                            <a href="https://hppojrbfhzttzvlvovre.supabase.co/storage/v1/object/public/app-files/DE%20E%201.0v.apk" target="_blank" class="btn btn-primary" style="padding: 0.6rem 1rem; font-size: 0.85rem;"><i class="fab fa-android"></i> Android</a>
+                            <button class="btn btn-secondary" style="padding: 0.6rem 1rem; font-size: 0.85rem; opacity: 0.5; pointer-events: none;" title="Coming Soon"><i class="fab fa-apple"></i> iOS</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- CONTACT SECTION -->
         <section id="contact" class="page-section section-padding">
             <div class="container">
@@ -646,7 +752,7 @@
                         
                         <div style="display: flex; gap: 1rem;">
                             <a href="https://wa.me/94716155666" target="_blank" class="btn btn-secondary" style="flex: 1;"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-                            <a href="mailto:isaradilnuka2005@gmail.com" class="btn btn-secondary" style="flex: 1;"><i class="fas fa-envelope"></i> Email</a>
+                            <a href="mailto:in.fo.dilnuka@outlook.com" class="btn btn-secondary" style="flex: 1;"><i class="fas fa-envelope"></i> Email</a>
                         </div>
                     </div>
                     
@@ -663,26 +769,72 @@
                 
                 <div class="grid grid-3" style="margin-top: 3rem; text-align: center;">
                     <div class="card liquid-glass" style="padding: 1.5rem;">
-                        <div class="sf-icon-wrapper green" style="margin: 0 auto 1rem; width: 48px; height: 48px; font-size: 1.2rem;"><i class="fas fa-phone-alt"></i></div>
-                        <p style="font-weight: 500;">+94 71 615 5666</p>
+                        <div class="sf-icon-wrapper green" style="margin: 0 auto 1rem; width: 48px; height: 48px; font-size: 1.2rem;"><i class="fab fa-whatsapp"></i></div>
+                        <p style="font-weight: 500;">WhatsApp</p>
                     </div>
                     <div class="card liquid-glass" style="padding: 1.5rem;">
                         <div class="sf-icon-wrapper blue" style="margin: 0 auto 1rem; width: 48px; height: 48px; font-size: 1.2rem;"><i class="fas fa-envelope"></i></div>
-                        <p style="font-size: 0.9rem; font-weight: 500;">isaradilnuka2005@gmail.com</p>
+                        <p style="font-size: 0.9rem; font-weight: 500;">in.fo.dilnuka@outlook.com</p>
                     </div>
                     <div class="card liquid-glass" style="padding: 1.5rem;">
                         <div class="sf-icon-wrapper orange" style="margin: 0 auto 1rem; width: 48px; height: 48px; font-size: 1.2rem;"><i class="fas fa-map-marker-alt"></i></div>
-                        <p style="font-weight: 500;">Horana, Sri Lanka</p>
+                        <p style="font-weight: 500;">Horana, Sri Lanka 12400</p>
                     </div>
                 </div>
             </div>
-            
-            <footer style="margin-top: 5rem; text-align: center; padding-bottom: 2rem;">
-                <p style="color: var(--text-muted); font-size: 0.85rem;">&copy; 2026 Isara Dilnuka. All rights reserved.</p>
-            </footer>
         </section>
 
     </main>
+
+    <!-- NEW ENHANCED FOOTER -->
+    <footer class="site-footer liquid-glass">
+        <div class="container">
+            <div class="footer-grid-layout">
+                <!-- Brand Section -->
+                <div class="footer-brand">
+                    <img src="titlebar.png" alt="ID Logo" onerror="this.src='https://placehold.co/80x80/1C1C1E/FFFFFF?text=ID'">
+                    <h3>Isara Dilnuka</h3>
+                    <p>Creative Full Stack Developer & Graphics Designer. Transforming your digital vision into reality with code and art.</p>
+                    <div class="footer-socials">
+                        <a href="https://wa.me/94716155666" target="_blank" class="social-icon" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                        <a href="mailto:in.fo.dilnuka@outlook.com" class="social-icon" title="Email"><i class="fas fa-envelope"></i></a>
+                        <a href="https://www.facebook.com/Dilnuka.13x" target="_blank" class="social-icon" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/dilnuka.13x/" target="_blank" class="social-icon" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.youtube.com/channel/UC6dd601bYXS5lMI6HiJjy7Q" target="_blank" class="social-icon" title="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.tiktok.com/@dilnuka.13x" target="_blank" class="social-icon" title="TikTok"><i class="fab fa-tiktok"></i></a>
+                        <a href="https://x.com/Dilnuka13x" target="_blank" class="social-icon" title="X (Twitter)"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.threads.com/@dilnuka.13x" target="_blank" class="social-icon" title="Threads"><i class="fas fa-at"></i></a>
+                        <a href="https://www.linkedin.com/in/isara-dilnuka-ab8161352/" target="_blank" class="social-icon" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://dilnuka13.github.io/my/" target="_blank" class="social-icon" title="Website"><i class="fas fa-globe"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div class="footer-links-sec">
+                    <h4 class="footer-heading">Explore</h4>
+                    <ul class="footer-links-list">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About Me</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#portfolio">Portfolio</a></li>
+                        <li><a href="#apps">Applications</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact Info -->
+                <div class="footer-contact-info">
+                    <h4 class="footer-heading">Contact Details</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> <span>Horana, Sri Lanka 12400</span></p>
+                    <p><i class="fab fa-whatsapp"></i> <span>WhatsApp</span></p>
+                    <p><i class="fas fa-envelope"></i> <span>in.fo.dilnuka@outlook.com</span></p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom-bar">
+                <p>&copy; <span id="currentYear"></span> Isara Dilnuka. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
 
     <!-- ACTION SHEET MODAL (GOOGLE FORM) -->
     <div class="modal" id="googleFormModal">
@@ -707,6 +859,9 @@
             <button class="btn btn-primary" style="width: 100%;" onclick="document.getElementById('notificationModal').classList.remove('active')">Done</button>
         </div>
     </div>
+
+    <!-- BACK TO TOP BUTTON -->
+    <button id="backToTop" class="back-to-top" title="Go to top"><i class="fas fa-arrow-up"></i></button>
 
     <script>
         // --- INDICATOR LOGIC (NAV & FILTERS) ---
@@ -744,8 +899,8 @@
                     document.body.classList.add('loaded');
                     handleRouting();
                     setTimeout(updateIndicators, 100); 
-                }, 800);
-            }, 2800); 
+                }, 500);
+            }, 1500); 
         });
 
         // --- SPA ROUTING LOGIC ---
@@ -823,6 +978,29 @@
                 });
             });
         });
+
+        // --- AUTO CALCULATE EXPERIENCE YEARS ---
+        const expElement = document.getElementById('expCount');
+        if (expElement) {
+            const currentYear = new Date().getFullYear();
+            const startYear = 2018;
+            expElement.textContent = (currentYear - startYear) + '+';
+        }
+
+        // --- BACK TO TOP & FOOTER LOGIC ---
+        const backToTopBtn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
 
         // --- CONTACT FORM TO GOOGLE SHEETS ---
         document.getElementById('contactForm').addEventListener('submit', function(e) {
